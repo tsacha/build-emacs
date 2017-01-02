@@ -1,12 +1,14 @@
 ---
 - name: restart emacs server
-  service:
+  systemd:
+    user: yes
     name: emacs
     state: restarted
   when: '{{ emacsstart is defined }}'
 
 - name: reload emacs server
-  service:
+  systemd:
+    user: yes
     name: emacs
     state: reloaded
   when: '{{ emacsstart is defined }}'
