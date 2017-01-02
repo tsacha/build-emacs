@@ -2,3 +2,5 @@
   connection: local
   roles:
     - emacs
+  vars:
+    emacsalias: yes

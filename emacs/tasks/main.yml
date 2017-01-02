@@ -88,3 +88,10 @@
     state: started
     enabled: yes
     user: yes
+
+- name: create emacs alias
+  file:
+    src: emacsalias.j2
+    dest: /usr/local/bin/e
+    mode: '0755'
+  when: '{{ emacsalias is defined }}'
