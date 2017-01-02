@@ -1,4 +1,9 @@
 ---
+- name: remove emacs.el
+  file:
+    path: ~/.emacs.el
+    state: absent
+
 - name: clone emacs.d
   git:
     repo: https://github.com/tsacha/.emacs.d/
