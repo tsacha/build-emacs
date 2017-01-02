@@ -1,0 +1,6 @@
+- hosts: localhost
+  connection: local
+  vars:
+    emacsdesktop: True
+  roles:
+    - emacs

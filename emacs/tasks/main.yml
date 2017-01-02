@@ -1,0 +1,85 @@
+---
+- name: clone emacs.d
+  git:
+    repo: https://github.com/tsacha/.emacs.d/
+    dest: ~/.emacs.d/
+  notify: transform org file
+  tags: emacs
+
+- name: install emacs modules dependencies (ArchLinux)
+  pacman:
+    name: '{{ item }}'
+    state: latest
+  with_items:
+    - make
+    - zip
+    - unzip
+  tags: emacs
+  when: 'ansible_distribution == "Archlinux"'
+
+- name: clone org-mode
+  git:
+    repo: git://orgmode.org/org-mode.git
+    dest: ~/.emacs.d/elisp/org-mode
+  notify: compile org-mode
+  tags: emacs
+
+- name: clone use-package
+  git:
+    repo: https://github.com/jwiegley/use-package
+    dest: ~/.emacs.d/elisp/use-package
+  tags: emacs
+
+- meta: flush_handlers
+  tags: emacs
+
+- name: create init.el symlink
+  file:
+    src: ~/.emacs.d/sacha.el
+    dest: ~/.emacs.d/init.el
+    state: link
+    force: yes
+  tags: emacs
+
+- name: install mu build dependencies (ArchLinux)
+  pacman:
+    name: '{{ item }}'
+    state: latest
+  with_items:
+    - gmime
+    - xapian-core
+    - xtrans
+    - autoconf-archive
+  tags: emacs
+  when: 'ansible_distribution == "Archlinux" and {{ emacsdesktop is defined }}'
+
+- name: clone mu
+  git:
+    repo: https://github.com/djcb/mu
+    dest: ~/.emacs.d/elisp/mu
+  tags: emacs
+  notify: compile mu
+  when: '{{ emacsdesktop is defined }}'
+
+- name: user systemd directory
+  file:
+    path: ~/.config/systemd/user
+    state: directory
+    recurse: yes
+
+- name: emacs service unit file
+  template:
+    src: emacs.unit.j2
+    dest: ~/.config/systemd/user/emacs.service
+  notify: reload systemd user
+  tags: emacs
+
+- meta: flush_handlers
+  tags: emacs
+
+- name: start emacs
+  systemd:
+    name: emacs
+    state: started
+    enabled: yes
+    user: yes
