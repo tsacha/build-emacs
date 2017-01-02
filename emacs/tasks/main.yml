@@ -71,6 +71,16 @@
     path: ~/.config/systemd/user
     state: directory
     recurse: yes
+  when: '{{ emacsstart is defined }}'
+  tags: emacs
+
+- name: local binary directory
+  file:
+    path: /usr/local/bin
+    state: directory
+    recurse: yes
+  when: '{{ emacsalias is defined }}'
+  tags: emacs
 
 - name: emacs service unit file
   template:
