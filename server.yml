@@ -4,3 +4,4 @@
     - emacs
   vars:
     emacsalias: yes
+    emacsstart: yes
