@@ -23,6 +23,9 @@
     - zip
     - unzip
   tags: emacs
+  become: yes
+  become_method: su
+  become_user: root
   when: 'ansible_distribution == "Archlinux"'
 
 - name: clone org-mode
@@ -56,6 +59,9 @@
     - xtrans
     - autoconf-archive
   tags: emacs
+  become: yes
+  become_method: su
+  become_user: root
   when: 'ansible_distribution == "Archlinux" and {{ emacsdesktop is defined }}'
 
 - name: clone mu
@@ -79,7 +85,9 @@
     path: /usr/local/bin
     state: directory
     recurse: yes
-  when: '{{ emacsalias is defined }}'
+  become: yes
+  become_method: su
+  become_user: root
   tags: emacs
 
 - name: emacs service unit file
@@ -108,4 +116,6 @@
     dest: /usr/local/bin/e
     mode: '0755'
   tags: emacs
-  when: '{{ emacsalias is defined }}'
+  become: yes
+  become_method: su
+  become_user: root
