@@ -9,7 +9,9 @@
   git:
     repo: https://github.com/tsacha/.emacs.d/
     dest: ~/.emacs.d/
-  notify: transform org file
+  notify:
+    - transform org file
+    - restart emacs server
   tags: emacs
 
 - name: install emacs modules dependencies (ArchLinux)
@@ -34,9 +36,6 @@
   git:
     repo: https://github.com/jwiegley/use-package
     dest: ~/.emacs.d/elisp/use-package
-  tags: emacs
-
-- meta: flush_handlers
   tags: emacs
 
 - name: create init.el symlink

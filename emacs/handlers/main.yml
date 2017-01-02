@@ -3,11 +3,13 @@
   service:
     name: emacs
     state: restarted
+  when: '{{ emacsstart is defined }}'
 
 - name: reload emacs server
   service:
     name: emacs
     state: reloaded
+  when: '{{ emacsstart is defined }}'
 
 - name: compile org-mode
   shell: make autoloads
