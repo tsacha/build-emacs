@@ -3,6 +3,7 @@
   file:
     path: ~/.emacs.el
     state: absent
+  tags: emacs
 
 - name: clone emacs.d
   git:
