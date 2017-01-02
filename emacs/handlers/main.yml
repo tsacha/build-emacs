@@ -1,4 +1,9 @@
 ---
+- name: transform org file
+  shell: emacs --batch -l org sacha.org -f org-babel-tangle or emacs --batch -l org --eval '(org-babel-tangle-file "sacha.org")'
+  args:
+    chdir: ~/.emacs.d/
+
 - name: restart emacs server
   systemd:
     user: yes
@@ -22,11 +27,6 @@
   shell: ./autogen.sh && make -j4
   args:
     chdir: ~/.emacs.d/elisp/mu
-
-- name: transform org file
-  shell: emacs --batch -l org sacha.org -f org-babel-tangle or emacs --batch -l org --eval '(org-babel-tangle-file "sacha.org")'
-  args:
-    chdir: ~/.emacs.d/
 
 - name: reload systemd user
   systemd:
