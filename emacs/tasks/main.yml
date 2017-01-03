@@ -34,7 +34,7 @@
     dest: ~/.emacs.d/elisp/org-mode
     remote_src: True
   notify: compile org-mode
-  when: '{{ orgmode_stable is not defined }}'
+  when: '{{ orgmode_stable is defined }}'
   tags: emacs
 
 - name: clone org-mode
