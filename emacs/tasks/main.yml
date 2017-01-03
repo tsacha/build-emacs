@@ -32,6 +32,14 @@
   file:
     path: ~/.emacs.d/elisp
     state: directory
+  tags: emacs
+
+- name: create org-mode directory
+  file:
+    path: ~/.emacs.d/elisp/org-mode
+    state: directory
+  when: '{{ orgmode_stable is defined }}'
+  tags: emacs
 
 - name: clone stable org-mode
   unarchive:
