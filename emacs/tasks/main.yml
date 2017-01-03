@@ -28,6 +28,11 @@
   become_user: root
   when: 'ansible_distribution == "Archlinux"'
 
+- name: create elisp directory
+  file:
+    path: ~/.emacs.d/elisp
+    state: directory
+
 - name: clone stable org-mode
   unarchive:
     src: http://orgmode.org/org-latest.tar.gz
