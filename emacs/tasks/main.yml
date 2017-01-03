@@ -32,8 +32,8 @@
   unarchive:
     src: http://orgmode.org/org-latest.tar.gz
     dest: ~/.emacs.d/elisp/org-mode
+    remote_src: True
   notify: compile org-mode
-  remote_src: True
   when: '{{ orgmode_stable is not defined }}'
   tags: emacs
 
