@@ -28,11 +28,21 @@
   become_user: root
   when: 'ansible_distribution == "Archlinux"'
 
+- name: clone stable org-mode
+  unarchive:
+    src: http://orgmode.org/org-latest.tar.gz
+    dest: ~/.emacs.d/elisp/org-mode
+  notify: compile org-mode
+  remote_src: True
+  when: '{{ orgmode_stable is not defined }}'
+  tags: emacs
+
 - name: clone org-mode
   git:
     repo: git://orgmode.org/org-mode.git
     dest: ~/.emacs.d/elisp/org-mode
   notify: compile org-mode
+  when: '{{ orgmode_stable is not defined }}'
   tags: emacs
 
 - name: clone use-package
